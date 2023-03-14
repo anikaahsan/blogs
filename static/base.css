@@ -1,0 +1,44 @@
+*{
+          
+    box-sizing: border-box;
+  }
+
+  .min_height {
+    background-color: black !important;
+  }
+
+  .color{
+   min-height: 100%;
+    background-color:#faf0f0; 
+    margin:auto
+  }
+  
+  /* Create three unequal columns that floats next to each other */
+  .column {
+    float: left;
+    padding: 10px;
+     
+  }
+  
+  .left, .right {
+    width: 20%;
+
+  }
+  
+  .middle {
+    width: 60%;
+  
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  @media screen and (max-width: 600px) {
+  .column {
+      width: 100%;
+  }
+  }

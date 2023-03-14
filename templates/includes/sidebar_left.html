@@ -1,0 +1,8 @@
+<h2>Archive</h2>
+{% for month_years in months_years %}
+    <ul>
+        <li>
+            <a href="{% url 'archive'  month_years  %}">{{ month_years }}</a>
+        </li>
+    </ul>
+{% endfor %}
