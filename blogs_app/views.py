@@ -17,14 +17,17 @@ import calendar
 def error_404_view(request,exception):
     return render(request,'blog/404.html')
 
-def starting_page(request):
+
+def home(request):
         queryset=Post.objects.all().order_by('-date')[ :3]
 
         context=dict(
-                     post=queryset
+                     posts=queryset
                      ) 
 
-        return render(request,'blog/index.html',context)
+        return render(request,'home.html',context)
+
+ 
 
 
 def archive(request,month_years):
@@ -40,7 +43,7 @@ def archive(request,month_years):
           
      for post in posts:
           print(post.month_year)
-    #  posts_all=Post.objects.filter(month_year=month_years)
+  
 
      queryset=[]
      for post in posts:
@@ -50,11 +53,24 @@ def archive(request,month_years):
         
      context=dict(posts=queryset,
                   month_year=month_years)             
-     return render(request,'blog/archive.html',context)
+     return render(request,'archive.html',context)
+
+
+
+
+
+def category(request,category ):
+   category=category
+   posts=Post.objects.filter(category__title=category)
+
+   context=dict(posts=posts,
+                category=category)
+   return render(request , 'category.html',context)
+
      
         
 
-def posts(request):
+def all_posts(request):
     queryset=Post.objects.all()
     paginator=Paginator(queryset,3) 
     page_number=request.GET.get('page')
@@ -66,7 +82,7 @@ def posts(request):
     context=dict(totalpages=totalpage,
                  post=subqueryset)
 
-    return render(request,'blog/all-posts.html' ,context)
+    return render(request,'all_posts.html' ,context)
 
 
 
@@ -81,12 +97,12 @@ def signup_function(request):
             print(form.errors)
             context=dict(errors=form.errors,
                          form=form)
-            return render(request ,'blog/signupform.html' ,context)
+            return render(request ,'signup.html' ,context)
 
 
     else:
         signupform=UserForm()
-        return render(request ,'blog/signupform.html',{'form':signupform})      
+        return render(request ,'signup.html',{'form':signupform})      
 
 
 
@@ -109,7 +125,7 @@ def write_post(request):
             print(form.author)
 
             form.save()
-            return redirect('posts-page')
+            return redirect('all_posts')
         
         else:
              
@@ -117,18 +133,18 @@ def write_post(request):
             print('not saved') 
             # return redirect('write-post') 
             context=dict(form=postform)
-            return render(request,'blog/writepost.html',context) 
+            return render(request,'writepost.html',context) 
 
     else:    
         postform=WritePostForm()
         context=dict(form=postform)
-        return render(request,'blog/writepost.html',context)   
+        return render(request,'writepost.html',context)   
     
 
 
 
 
-@login_required
+
 def author_all_posts(request ,author):
     try:
         # post=Post.objects.get(pk=pk)
@@ -186,7 +202,7 @@ def post_detail(request,slugs):
                         related_post=related_post
                         )
 
-            return render(request, 'blog/post_detail_beautiful.html' ,context)
+            return render(request, 'post_detail.html' ,context)
     
 
 
@@ -209,28 +225,11 @@ def search(request):
                      postss=queryset,
                      form=form
                      ) 
-                return render(request,'blog/search_v2.html',context)
+                return render(request,'search.html',context)
 
         
 
-def category(request,category ):
-   category=category
-   posts=Post.objects.filter(category__title=category)
 
-   context=dict(posts=posts,
-                category=category)
-   return render(request , 'blog/categorypost.html',context)
-
-
-def basev2(request):
-        queryset=Post.objects.all().order_by('-date')[ :5]
-
-        context=dict(
-                     post=queryset
-                     ) 
-      
-        return render(request,'blog/home.html',context)
-        
 
 
 

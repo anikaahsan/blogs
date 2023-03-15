@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block cssfiles %}
+
+<link rel="stylesheet" href="{% static 'writepost.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+  <div class="form-controls">
+
+
+    <form method="POST" action="{% url 'writepost' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+           <h3>{{ field.label }}</h3>
+           {{ field}}<br>
+           {{ field.errors }}
+        {% endfor %}   
+        
+        <input class="btn btn-success " type="submit"  value="post">
+    </form>
+
+
+  </div>
+
+{% endblock %}

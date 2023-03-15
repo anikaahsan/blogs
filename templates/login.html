@@ -1,0 +1,34 @@
+
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static 'login.css' %}" >
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+
+
+   
+    <div class="form-wrap">
+			<h1>login</h1>
+
+            <form method="POST" action="{% url 'login' %}">
+
+				{% csrf_token %}
+                {{ form.non_field_errors }}
+				{% for i in form %}
+				   <h3>{{ i.label }}</h3>
+				   {{ i }}<br>
+                   {{i.errors}}
+				{% endfor %}   
+				<button>login</button>
+                <br>
+                <br>
+                <h4>dont have a account?<a class='text-white p-2 ' href="{% url 'signup' %}">signup</a></h4>
+							
+			</form>        
+        </div>      
+
+
+
+
+

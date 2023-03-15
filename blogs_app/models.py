@@ -17,16 +17,15 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title=models.CharField(max_length=255)
-    date=models.DateTimeField(auto_now=True,null=True,blank=True)
-    slug=models.SlugField( null=True, blank=True)
-    image=models.ImageField(upload_to='posts',null=True)
+    date=models.DateTimeField(null=True,blank=True)
+    slug=models.SlugField(null=True, blank=True)
+    image=models.ImageField(upload_to='posts',null=True,blank=True)
     content=models.TextField()
     author=models.ForeignKey(User , on_delete=models.SET_NULL ,null=True,related_name='posts')
     category=models.ForeignKey(Category,on_delete=models.SET_NULL,null=True,blank=True)
     tags=models.ManyToManyField(Tag,related_name='posts')
     likes=models.ManyToManyField(User,related_name='post_liked')
-    month_year=models.CharField(max_length=255,null=True,blank=True)
-
+    
     def __str__(self):
         return self.title
     

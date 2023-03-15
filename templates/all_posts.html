@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for post in post %}
+        {% include 'includes/post.html' %}
+       
+      {% endfor %}  
+
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+  
+      {% if post.has_previous %}
+          <li class="page-item ">    
+            <a class="page-link" href="/post/?page={{ post.previous_page_number }}">previous</a>
+          </li>
+      {% endif %} 
+  
+      {% for n in totalpages %}
+      <li class="page-item">
+           <a class="page-link" href="/post/?page={{n}}">{{n}}</a>
+      </li>
+      {% endfor %}
+  
+      {% if post.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="/post/?page={{ post.next_page_number }}">Next</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endblock %}  

@@ -1,0 +1,21 @@
+
+{% extends 'base.html'%}
+
+
+
+{% block content %}
+<div class="row d-flex justify-content-center">
+    <div class="container">
+        
+            <h2>  Search results: </h2>
+            {% if postss %}
+                {% for post in postss %}
+                     {% include 'includes/post.html' %}
+                {% endfor %}   
+            {% else %}    
+            <h3>no results found!!</h3>
+            {% endif %}
+   
+   </div>  
+   </div>
+{% endblock %}

@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from .models import Comment ,Post,Tag
 
 class CommentForm(forms.ModelForm):
-    text=forms.Textarea()
-    class Meta:
+     text = forms.Textarea()
+     class Meta:
         model=Comment
         exclude=['post' ,'username','is_approved']
         labels={
@@ -13,10 +13,18 @@ class CommentForm(forms.ModelForm):
             'text':'your comment'
 
         }
-        def __init__(self,*args,**kwargs):
-            super().__init__(*args,**kwargs)
-            
-            self.fields['text'].widget.attrs.update({'class':"form-control mr-sm-2", 'rows':"5" ,'id':"comment"})
+        # widget={
+        #     'text':forms.TextInput(attrs={'class':'form-control' , 'rows':"3"  })
+
+
+        # }
+        def __init__(self, *args, **kwargs):
+            super(CommentForm, self).__init__(*args, **kwargs)
+            for field in iter(self.fields):
+                self.fields[field].widget.attrs.update({
+                    'class': 'form-control'
+            })
+        
         
         
 class UserForm(UserCreationForm):
@@ -35,7 +43,7 @@ class WritePostForm(forms.ModelForm):
    
     class Meta:
         model=Post
-        fields=["title",'excerpt','image','content','category','tags']
+        fields=["title",'date','image','content','category','tags']
         
 
 class SearchForm(forms.Form):

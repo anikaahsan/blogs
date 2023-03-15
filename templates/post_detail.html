@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+<div class="card mb-3">
+    <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+    <div class="card-img-overlay">
+        <h1 class="card-title">{{ post.title }}</h1>
+      <p class="card-text"><small class="text-muted">posted on {{ post.date }} </small></p>
+      <p class="card-text"><small class="text-muted"><h5>posted by <a href="">{{ post.author }}</a> </h5></small></p>
+      
+    </div>    
+    <div class="card-body">
+      
+      <p class="card-text">{{ post.content }}</p>
+     
+    </div>
+</div>
+
+
+
+<div class="container mt-3">
+    <form action="{% url 'post_detail' post.slug %}" method="POST">
+      {% csrf_token %}
+      <div class="mb-3 mt-3">
+        <label for="comment"><h5>Comment:</h5></label>
+                {% if request.user.is_authenticated %} 
+                     
+                   {{ form.text }}
+                {% else %}   
+                        {{ form }}  
+                {% endif %}
+        <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<hr class="my-4" />
+
+<div class="container ">
+    <h3>Related posts</h3>
+    {% for posts in related_post %}
+        {% if posts.pk != post.pk %}
+        <a href="{% url 'post_detail' posts.slug %}" style='text-decoration:none;'>
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ posts.image.url }}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ posts.title }}</h5>
+                                    <p class="card-text">{{ posts.content|truncatewords:7 }}</p>
+                            
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+    {% endfor %}    
+</div>
+
+
+
+{% endblock %}

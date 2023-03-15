@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blogs_app.contextproccessor.extra',
             ],
         },
     },
@@ -117,9 +118,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIR=[BASE_DIR/'static']
+STATICFILES_DIRS=[BASE_DIR/'static']
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT=BASE_DIR/'uploads'
+MEDIA_URL='/files/'
+
+LOGIN_REDIRECT_URL='home.html'
+
+
+LOGIN_URL='login'
